@@ -1,0 +1,22 @@
+import os
+
+def delete_tilde_files_in_documents():
+    # ユーザーのホームディレクトリを取得
+    home_directory = os.path.expanduser("~")
+    documents_directory = os.path.join(home_directory, "Documents")
+
+    # Documentsディレクトリ内のファイルを取得
+    for filename in os.listdir(documents_directory):
+        # ファイルのフルパスを取得
+        file_path = os.path.join(documents_directory, filename)
+        
+        # バックアップファイルかつファイルであるかをチェック
+        if filename.endswith('~') and os.path.isfile(file_path):
+            try:
+                os.remove(file_path)  # ファイルを削除
+                print(f'Deleted: {file_path}')
+            except Exception as e:
+                print(f'Error deleting {file_path}: {e}')
+
+if __name__ == "__main__":
+    delete_tilde_files_in_documents()
